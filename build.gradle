@@ -1,0 +1,38 @@
+// 只编译公开契约及其 Fabric 包，不从玩法仓库载入源码或产物。
+plugins {
+    id 'architectury-plugin' version '3.4-SNAPSHOT'
+    id 'dev.architectury.loom' version '1.7-SNAPSHOT' apply false
+}
+
+architectury { minecraft = '1.21.1' }
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'architectury-plugin'
+    apply plugin: 'dev.architectury.loom'
+
+    group = 'net.shiroha233.roadweaver'
+    version = '1.1.2'
+
+    repositories {
+        maven { url = 'https://maven.architectury.dev/' }
+        maven { url = 'https://maven.fabricmc.net/' }
+        // Loom 在 Fabric 构建中也从这里解析映射工具。
+        maven { url = 'https://maven.minecraftforge.net/' }
+        mavenCentral()
+    }
+
+    java {
+        toolchain.languageVersion = JavaLanguageVersion.of(21)
+        withSourcesJar()
+    }
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+        options.release = 21
+    }
+    loom { silentMojangMappingsLicense() }
+    dependencies {
+        minecraft 'com.mojang:minecraft:1.21.1'
+        mappings loom.officialMojangMappings()
+    }
+}
