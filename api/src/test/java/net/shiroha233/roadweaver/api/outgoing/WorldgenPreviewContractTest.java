@@ -18,7 +18,15 @@ public final class WorldgenPreviewContractTest {
         WorldgenPreviewApi.addListener(listener);WorldgenPreviewApi.addListener(listener);
         WorldgenPreviewApi.completed(a,1,2);require(count[0]==1,"同订阅重复通知");
         WorldgenPreviewApi.removeListener(listener);WorldgenPreviewApi.completed(a,1,2);require(count[0]==1,"撤销仍通知");
-        System.out.println("PREVIEW-CONTRACT PASS tests=6");
+        require(RoadOverlayApi.peek(a,0,0,16,16,2).state()==RoadOverlayApi.State.UNAVAILABLE,"未装道路冒充空地图");
+        var points=new ArrayList<RoadOverlayApi.Point>();points.add(new RoadOverlayApi.Point(1,90,2));points.add(new RoadOverlayApi.Point(2,91,2));
+        var line=new RoadOverlayApi.Line(RoadOverlayApi.Kind.BRIDGE,points);points.clear();
+        require(line.points().size()==2,"地图中心线未冻结");
+        RoadOverlayApi.register((world,x,z,xx,zz,budget)->world==a?new RoadOverlayApi.Snapshot(RoadOverlayApi.State.READY,7,budget==2,List.of(line)):RoadOverlayApi.Snapshot.unavailable(),player->player==a);
+        require(RoadOverlayApi.peek(a,0,0,16,16,2).truncated(),"预算标记未传递");
+        require(RoadOverlayApi.peek(b,0,0,16,16,2).state()==RoadOverlayApi.State.UNAVAILABLE,"地图接口跨世界");
+        require(RoadOverlayApi.isAllowed(a)&&!RoadOverlayApi.isAllowed(b),"地图权限未复用");
+        System.out.println("PREVIEW-CONTRACT PASS tests=11");
     }
     private static void require(boolean condition,String message) {if(!condition)throw new AssertionError(message);}
 }
