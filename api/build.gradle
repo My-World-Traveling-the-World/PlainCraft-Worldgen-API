@@ -33,3 +33,11 @@ tasks.register('contractJar', Jar) {
     destinationDirectory = layout.buildDirectory.dir('contract')
     from sourceSets.main.output
 }
+
+// 契约不需要Minecraft启动；直接执行，避免无测试框架时测试任务空转。
+tasks.register('previewContractTest',JavaExec) {
+    dependsOn tasks.named('testClasses')
+    classpath=sourceSets.test.runtimeClasspath
+    mainClass='net.shiroha233.roadweaver.api.outgoing.WorldgenPreviewContractTest'
+}
+tasks.named('check') { dependsOn tasks.named('previewContractTest') }

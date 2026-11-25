@@ -1,5 +1,14 @@
 # 世界生成 API 开发指南与交接
 
+## 2026-11-25 · 只读远景契约（1.2.0）
+
+1. **改动**：新增WorldgenPreviewApi。提供方按当前世界句柄返回UNAVAILABLE/EMPTY/READY、GEOMETRY/BLOCKS与不可变区间；查询不得规划、加载或读盘。完成通知仅表达真实落块结束，消费者在自己的预算内刷新。四个玩法模组使用统一契约，前置不依赖SeedGen或任何玩法实现。
+2. **验证**：外置Gradle8.8/JDK21，previewContractTest六项通过；contractJar、devModJar、intermediary契约与正式build成功，verifyStandaloneApi为PASS。真实Fabric隔离服务器已消费契约完成WWOO合成和THT成功写入验证。
+3. **未验证**：未验收完整整合包所有远景画面、任意服务器同步和所有模组特征。接口并不承诺GEOMETRY等同最终桥隧或河岸方块；不能据此宣布原有道路规划失败或长城收口问题修复。
+4. **负控**：将runs的List.copyOf改成保留可变原列表，契约测试实际AssertionError；git checkout精确恢复后六项与构建重新通过。日志build/preview-mutation-mutable-snapshot.log与preview-api-verified.log。
+5. **下一步**：消费方继续按实际施工和预测层分开验收；未命中返回未知，禁止为了远景隐式扩大世界生成。需要联机远景时另设计经授权的服务器数据传输，不能只按种子猜测私有计划。
+6. **历史与回退**：基线1aaa7cb，行为新增。不改RoadData、台账及配置持久化格式；各消费方依赖最低版本同步升为1.2.0。部署与推送结果在本轮收尾记录。
+
 [项目介绍](README.md) · [版本更新](CHANGELOG.md)
 
 ## 构建和验证
