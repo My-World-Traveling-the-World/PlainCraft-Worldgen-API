@@ -7,7 +7,7 @@
 3. **未验证**：未验收完整整合包所有远景画面、任意服务器同步和所有模组特征。接口并不承诺GEOMETRY等同最终桥隧或河岸方块；不能据此宣布原有道路规划失败或长城收口问题修复。
 4. **负控**：将runs的List.copyOf改成保留可变原列表，契约测试实际AssertionError；git checkout精确恢复后六项与构建重新通过。日志build/preview-mutation-mutable-snapshot.log与preview-api-verified.log。
 5. **下一步**：消费方继续按实际施工和预测层分开验收；未命中返回未知，禁止为了远景隐式扩大世界生成。需要联机远景时另设计经授权的服务器数据传输，不能只按种子猜测私有计划。
-6. **历史与回退**：基线1aaa7cb，行为新增。不改RoadData、台账及配置持久化格式；各消费方依赖最低版本同步升为1.2.0。部署与推送结果在本轮收尾记录。
+6. **历史与回退**：基线1aaa7cb，行为新增。不改RoadData、台账及配置格式，消费方最低版本同步1.2.0。649f111已推送GitHub main；1.2.0已部署WAYFARING，SHA256为6fd538c66048240f4dfc99d41bea6b2a7e729eb2d2287ce12008a7f6b27eaa29。旧包备份及六包清单在相邻plaincraft-voxyseedgen-l10n/build/deployment-backups/preview-1.2.0-20261125-162224，未改玩家存档。
 
 [项目介绍](README.md) · [版本更新](CHANGELOG.md)
 
